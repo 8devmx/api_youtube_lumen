@@ -40,7 +40,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'email' => 'required|unique:users|email',
-            'phone' => 'required|max_digits:10',
+            'phone' => 'required|digits:10',
         ]);
 
         $user = new User();
@@ -62,7 +62,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = User::where('id', $id)->get();
+
+        if (count($data) < 1) {
+            return response()->json(["error" => "User not found"]);
+        }
+        return response($data);
     }
 
     /**
@@ -85,7 +90,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|digits:10',
+        ]);
+
+        $user = User::where('id', $id)->first();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = Hash::make($request->password);
+        $user->status = $request->status;
+
+        $user->save();
+
+        return response()->json($user);
     }
 
     /**
@@ -96,6 +117,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = User::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(["error" => "User not found"]);
+        }
+        $data->delete();
+
+        return response()->json(["message" => "User with id $id deleted"]);
     }
 }
