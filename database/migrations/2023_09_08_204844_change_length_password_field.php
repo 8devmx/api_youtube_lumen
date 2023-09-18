@@ -13,7 +13,7 @@ class ChangeLengthPasswordField extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table("users", function (Blueprint $table) {
             $table->string('password', 100)->change();
         });
     }
@@ -25,8 +25,6 @@ class ChangeLengthPasswordField extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('password', 15)->change();
-        });
+        //
     }
 }
