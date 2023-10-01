@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class AuthController extends BaseController
@@ -40,7 +41,7 @@ class AuthController extends BaseController
                 'error' => 'El correo no existe'
             ], 400);
         }
-        if ($this->request->input('password') == $user->password) {
+        if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
                 'token' => $this->jwt($user)
             ], 200);
