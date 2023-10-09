@@ -25,10 +25,17 @@ $router->group(
         $router->delete('/users/{id}', 'UserController@destroy');
         $router->put('/users/{id}', 'UserController@update');
         $router->post('/users', 'UserController@store');
+
         $router->get('/categories', 'CategoryController@index');
         $router->get('/categories/{id}', 'CategoryController@show');
         $router->delete('/categories/{id}', 'CategoryController@destroy');
         $router->post('/categories', 'CategoryController@store');
         $router->put('/categories/{id}', 'CategoryController@update');
+
+        $router->get('/expenses', 'ExpenseController@index');
+        $router->get('/expenses/{id}', 'ExpenseController@show');
+        $router->delete('/expenses/{id}', 'ExpenseController@destroy');
+        $router->put('/expenses/{id}', 'ExpenseController@update');
+        $router->post('/expenses', 'ExpenseController@store');
     }
 );
